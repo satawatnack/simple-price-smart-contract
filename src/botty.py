@@ -26,7 +26,7 @@ def startBot():
                 ethPrice = int(data["ethereum"]["usd"])
                 if (priceBefore != ethPrice):
                     print('{} ETH/USD -> New price!!! HOLD Ethereum :D'.format(ethPrice))
-                    set_ethPrice(ethPrice, 0.001, os.environ['ADDRESS'], os.environ['PRIVATE_KEY'])
+                    set_ethPrice(ethPrice, os.environ['ADDRESS'], os.environ['PRIVATE_KEY'])
                     priceBefore = ethPrice
                 else:
                     print('{} ETH/USD -> Are you a stablecoin?'.format(priceBefore))
