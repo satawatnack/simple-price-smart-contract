@@ -5,7 +5,7 @@ create simple smart contract and bot program using solidity and web3
 1. setup .env file (example in .env.sample)
 2. in src/deploy.py
    ```python
-    deploy_contract(name, price, amount_ETH, os.environ['ADDRESS'], os.environ['PRIVATE_KEY'])
+    deploy_contract(name, price, os.environ['ADDRESS'], os.environ['PRIVATE_KEY'])
    ```
 3. set your contract address in .env
 4. in src/botty.py
