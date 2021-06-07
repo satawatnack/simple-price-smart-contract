@@ -17,13 +17,13 @@ contract_bytecode = os.environ['CONTRACT_BYTECODE']
 def get_nonce(ETH_address):
     return web3_connection.eth.get_transaction_count(ETH_address)
 
-def deploy_contract(price, address, signature):
+def deploy_contract(name, price, address, signature):
     ethh_contract = web3_connection.eth.contract(abi=contract_abi, bytecode=contract_bytecode)
     transaction_body = {
         'nonce': get_nonce(address),
         'gasPrice': web3_connection.eth.gasPrice
     }
-    deployment = ethh_contract.constructor(price).buildTransaction(transaction_body)
+    deployment = ethh_contract.constructor(name, price).buildTransaction(transaction_body)
     signed_transation = web3_connection.eth.account.sign_transaction(deployment, signature)
     result = web3_connection.eth.send_raw_transaction(signed_transation.rawTransaction)
     return result

@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 import requests
 import json
 
-from interact import set_ethPrice, get_ethPrice
+from interact import set_priceByName, get_priceByName
 
 load_dotenv()
 
@@ -16,7 +16,7 @@ parameters = {
 }
 
 def startBot():
-    priceBefore = get_ethPrice()
+    priceBefore = get_priceByName("ETH")
     
     while True:
         try:
@@ -26,7 +26,7 @@ def startBot():
                 ethPrice = int(data["ethereum"]["usd"])
                 if (priceBefore != ethPrice):
                     print('{} ETH/USD -> New price!!! HOLD Ethereum :D'.format(ethPrice))
-                    set_ethPrice(ethPrice, os.environ['ADDRESS'], os.environ['PRIVATE_KEY'])
+                    set_priceByName("ETH", ethPrice, os.environ['ADDRESS'], os.environ['PRIVATE_KEY'])
                     priceBefore = ethPrice
                 else:
                     print('{} ETH/USD -> Are you a stablecoin?'.format(priceBefore))

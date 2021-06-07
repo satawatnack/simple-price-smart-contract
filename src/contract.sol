@@ -1,18 +1,19 @@
 pragma solidity ^0.8.4;
 
-contract ETHContract { //contract's name 
-    uint256 price; //private variable name token type unsigned int256
-    constructor(uint256 _price) { //constructor run one time when deploy
-        price = _price; 
+contract CoinContract {
+    mapping(string => uint) prices;
+     
+    constructor(string memory name, uint256 _price) {
+        prices[name] = _price; 
     }
     
-    // function for get eth price
-    function GetEthPrice() public view returns(uint256) {
-        return price;
+    // function for get price
+    function GetPriceByName(string memory name) public view returns(uint256) {
+        return prices[name];
     }
     
-    // function for set eth price
-    function SetEthPrice(uint256 _price) public{
-        price = _price;
+    // function for set price
+    function SePriceByName(string calldata name, uint256 _price) public{
+        prices[name] = _price;
     }
 }
