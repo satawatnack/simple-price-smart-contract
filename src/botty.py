@@ -16,22 +16,17 @@ parameters = {
 }
 
 def startBot():
-    priceBefore = get_priceByName("ETH")
     
     while True:
         try:
-            response = requests.get("https://api.coingecko.com/api/v3/simple/price", params=parameters)
-            if (response.status_code == 200):
-                data = json.loads(response.text)
-                ethPrice = int(data["ethereum"]["usd"])
-                if (priceBefore != ethPrice):
-                    print('{} ETH/USD -> New price!!! HOLD Ethereum :D'.format(ethPrice))
-                    set_priceByName("ETH", ethPrice, os.environ['ADDRESS'], os.environ['PRIVATE_KEY'])
-                    priceBefore = ethPrice
-                else:
-                    print('{} ETH/USD -> Are you a stablecoin?'.format(priceBefore))
-
+            res = set_priceByName("ETH", os.environ['ADDRESS'], os.environ['PRIVATE_KEY'])
+            print("Transaction Hash:", res.hex())
+            
         except Exception as e: print(str(e))
         
         # sleep 1 hr. == 3600 seconds
-        time.sleep(60)
+        time.sleep(30)
+
+# startBot()
+
+print(get_priceByName("ETH")["price"])

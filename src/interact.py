@@ -4,6 +4,8 @@ from dotenv import load_dotenv
 
 from web3 import Web3
 
+from bandChain import BandChain
+
 load_dotenv()
 
 node_provider = os.environ['NODE_PROVIDER']
@@ -18,20 +20,25 @@ def are_we_connected():
 def get_nonce(ETH_address):
     return web3_connection.eth.get_transaction_count(ETH_address)
 
-def get_priceByName(name):
+def get_priceByName(coinName):
     contract = web3_connection.eth.contract(address=contract_address, abi=contract_abi)
-    ethPrice = contract.functions.GetPriceByName(name).call()
-    return ethPrice
+    rid, price = contract.functions.GetPriceByName(coinName).call()
+    return { "rid": rid, "price": price }
 
-def set_priceByName(name, price, owner, signature):
+def set_priceByName(coinName, owner, signature):
+    # get price from BandChain
+    bandChain = BandChain("to da moon", "band-laozi-testnet1", "http://rpc-laozi-testnet1.bandchain.org")
+    res = bandChain.requestCoinData(coinName)
+
     contract = web3_connection.eth.contract(address=contract_address, abi=contract_abi)
 
-    # ethereum network work in Wei then convert ether to wei
+    #ethereum network work in Wei then convert ether to wei
     transaction_body = {
         'nonce': get_nonce(owner),
         'gasPrice': web3_connection.eth.gasPrice
     }
-    function_call = contract.functions.SePriceByName(name, price).buildTransaction(transaction_body)
+
+    function_call = contract.functions.SetPriceByName(res["rid"], res["coinName"], res["price"]).buildTransaction(transaction_body)
     signed_transaction = web3_connection.eth.account.sign_transaction(function_call, signature)
     result = web3_connection.eth.send_raw_transaction(signed_transaction.rawTransaction)
     return result
