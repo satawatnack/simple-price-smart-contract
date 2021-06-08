@@ -27,6 +27,4 @@ def startBot():
         # sleep 1 hr. == 3600 seconds
         time.sleep(30)
 
-# startBot()
-
-print(get_priceByName("ETH")["price"])
+startBot()
