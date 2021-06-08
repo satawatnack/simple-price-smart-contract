@@ -1,5 +1,5 @@
 # simple-price-smart-contract
-create simple smart contract and bot program that get coin price from BandChain to set coin price on smart contract
+   create simple smart contract and bot program that get coin price from BandChain to set coin price on smart contract
 using solidity and web3
 
 ## Getting Started
